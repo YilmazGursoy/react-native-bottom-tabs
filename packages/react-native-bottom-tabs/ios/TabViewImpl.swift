@@ -185,6 +185,30 @@ private func configureTransparentAppearance(tabBar: UITabBar, props: TabViewProp
 #endif
   tabBar.unselectedItemTintColor = props.inactiveTintColor
 
+  // Set appearance style based on props if using translucent
+  if props.translucent, let appearanceStyle = props.appearanceStyle {
+    if #available(iOS 15.0, *) {
+      var appearance: UITabBarAppearance
+      if appearanceStyle == "light" {
+        appearance = UITabBarAppearance()
+        appearance.configureWithTransparentBackground()
+        tabBar.overrideUserInterfaceStyle = .light
+      } else if appearanceStyle == "dark" {
+        appearance = UITabBarAppearance()
+        appearance.configureWithTransparentBackground()
+        tabBar.overrideUserInterfaceStyle = .dark
+      } else {
+        // Auto - use system default
+        appearance = UITabBarAppearance()
+        appearance.configureWithTransparentBackground()
+        tabBar.overrideUserInterfaceStyle = .unspecified
+      }
+      
+      tabBar.standardAppearance = appearance
+      tabBar.scrollEdgeAppearance = appearance
+    }
+  }
+
   guard let items = tabBar.items else { return }
 
   let fontSize = props.fontSize != nil ? CGFloat(props.fontSize!) : tabBarDefaultFontSize
@@ -217,6 +241,20 @@ private func configureStandardAppearance(tabBar: UITabBar, props: TabViewProps) 
 
   if props.barTintColor != nil {
     appearance.backgroundColor = props.barTintColor
+  }
+  
+  // Set appearance style based on props
+  if let appearanceStyle = props.appearanceStyle {
+    if #available(iOS 15.0, *) {
+      if appearanceStyle == "light" {
+        tabBar.overrideUserInterfaceStyle = .light
+      } else if appearanceStyle == "dark" {
+        tabBar.overrideUserInterfaceStyle = .dark
+      } else {
+        // Auto - use system default
+        tabBar.overrideUserInterfaceStyle = .unspecified
+      }
+    }
   }
 
   // Configure item appearance
@@ -318,6 +356,9 @@ extension View {
       }
       .onChange(of: props.tabBarHidden) { newValue in
         tabBar?.isHidden = newValue
+      }
+      .onChange(of: props.appearanceStyle) { newValue in
+        updateTabBarAppearance(props: props, tabBar: tabBar)
       }
   }
 #endif

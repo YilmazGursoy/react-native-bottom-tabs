@@ -62,6 +62,11 @@ interface Props<Route extends BaseRoute> {
    */
   tabBarInactiveTintColor?: ColorValue;
   /**
+   * Manually set the appearance style for the tab bar when using translucent prop. (iOS only)
+   * This allows overriding the system appearance for translucent tab bars.
+   */
+  appearanceStyle?: 'light' | 'dark' | 'auto';
+  /**
    * State for the tab view.
    *
    * The state should contain a `routes` prop which is an array of objects containing `key` and `title` props, such as `{ key: 'music', title: 'Music' }`.

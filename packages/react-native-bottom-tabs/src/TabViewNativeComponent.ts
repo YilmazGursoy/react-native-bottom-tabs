@@ -46,6 +46,7 @@ export interface TabViewProps extends ViewProps {
   scrollEdgeAppearance?: string;
   barTintColor?: ColorValue;
   translucent?: WithDefault<boolean, true>;
+  appearanceStyle?: string; // "light" | "dark" | "auto"
   rippleColor?: ColorValue;
   activeTintColor?: ColorValue;
   inactiveTintColor?: ColorValue;

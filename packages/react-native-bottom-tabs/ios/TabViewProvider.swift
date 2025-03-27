@@ -108,6 +108,12 @@ public final class TabInfo: NSObject {
       props.translucent = translucent
     }
   }
+  
+  @objc public var appearanceStyle: NSString? {
+    didSet {
+      props.appearanceStyle = appearanceStyle as? String
+    }
+  }
 
   @objc var items: NSArray? {
     didSet {

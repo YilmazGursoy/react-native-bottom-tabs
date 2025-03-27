@@ -97,6 +97,10 @@ using namespace facebook::react;
     _tabViewProvider.translucent = newViewProps.translucent;
   }
 
+  if (oldViewProps.appearanceStyle != newViewProps.appearanceStyle) {
+    _tabViewProvider.appearanceStyle = RCTNSStringFromStringNilIfEmpty(newViewProps.appearanceStyle);
+  }
+
   if (oldViewProps.icons != newViewProps.icons) {
     auto iconsArray = [[NSMutableArray alloc] init];
     for (auto &source: newViewProps.icons) {
